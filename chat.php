@@ -135,19 +135,6 @@ $profile_id = um_profile_id();
             </div>
 
         </div>
-        
-        <div id="register-panel" class="uk-position-cover uk-overlay uk-overlay-default uk-flex uk-flex-center" uk-overflow-auto hidden>
-            <a href="#register-panel" class="uk-position-small uk-position-top-rigt uk-light --close-overlay" uk-toggle="animation: uk-animation-fade">&times;</a>
-            <div class="uk-panel">
-                <?php echo do_shortcode('[ultimatemember form_id="2040"]'); ?>
-            </div>
-        </div>
-        <div id="login-panel" class="uk-position-cover uk-overlay uk-overlay-default uk-flex uk-flex-center" uk-overflow-auto hidden>
-            <a href="#login-panel" class="uk-position-small uk-position-top-rigt uk-light --close-overlay" uk-toggle="animation: uk-animation-fade">&times;</a>
-            <div class="uk-panel">
-                <?php echo do_shortcode('[ultimatemember form_id="2041"]'); ?>
-            </div>
-        </div>
-        
+
     </div>
 </div>
