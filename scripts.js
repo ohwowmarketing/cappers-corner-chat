@@ -63,7 +63,7 @@ function loadReplies() {
                 );
             });
         } else {
-            jQuery('#replies').html('<div class="uk-position-center --welcome">It\s empty in here. Try writing a comment.</div>');
+            jQuery('#replies').html('<div class="uk-position-center uk-text-center --welcome">It\'s empty in here. Try writing a comment. <small class="uk-display-block uk-text-meta">Comments are subject to site moderator\'s discretionary removal.</small></div>');
         }
         // Scroll to Bottom After Chats and Images have Loaded
         jQuery('img').each(function() {
