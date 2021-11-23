@@ -16,14 +16,14 @@ function loadChannels() {
     }, function (response) {
         let channels = JSON.parse(response);
         if (channels.length > 0) {
-            jQuery('#heading').text('Locks of the Week'); // Unhide the heading
             jQuery('#channels').show(); // Unhide the heading
         }
         let selected = false;
         channels.map((channel, key) => {
             if (eval(channel.main)) {
                 selected = 'selected';
-                selectedChannel = channel.id
+                selectedChannel = channel.id;
+                jQuery('#heading').text(channel.name); // Change heading
             } else {
                 selected = ''
             }
@@ -35,6 +35,7 @@ function loadChannels() {
 
 jQuery('#channels').change(function() {
     selectedChannel = jQuery('#channels').val();
+    jQuery('#heading').text(jQuery('#channels').find('option:selected').text()); // Change heading
     loadReplies()
 });
 
@@ -62,11 +63,20 @@ function loadReplies() {
                 );
             });
         } else {
-            jQuery('#replies').html('<div class="uk-position-center --welcome">It\s empty in here. Try writing a comment.</div>');
+            jQuery('#replies').html('It\s empty in here. Try writing a comment.');
         }
-        // Scroll to Bottom of Chats After Loaded
-        let element = document.getElementById('replies-body');
-        element.scrollTop = element.scrollHeight;
+        // Scroll to Bottom After Chats and Images have Loaded
+        jQuery('img').each(function() {
+            if(this.complete) {
+                let element = document.getElementById('replies-body');
+                element.scrollTop = element.scrollHeight;
+            } else {
+                jQuery(this).one('load', function() {
+                    let element = document.getElementById('replies-body');
+                    element.scrollTop = element.scrollHeight;
+                })
+            }
+        });
     });
 }
 
@@ -87,7 +97,34 @@ jQuery('#replyForm').submit(function(event) {
     });
 });
 
+// Stickers
 
+function sendSticker(sticker) {
+    jQuery.post(Obj.url, {
+        'reply': 'sticker:' + sticker,
+        'channel': selectedChannel,
+        'action': 'repliesStore',
+    }, function (response) {
+        // Close reactions modal and focus on input field
+        UIkit.modal('#stickers').hide();
+        UIkit.modal('#emojis').hide();
+        jQuery('#reply').focus();
+        loadReplies();
+    });
+}
 
-    
+// Stickers
 
+function sendEmoji(emoji) {
+    jQuery.post(Obj.url, {
+        'reply': '<span class="uk-h1">&#x' + emoji + ';</span>',
+        'channel': selectedChannel,
+        'action': 'repliesStore',
+    }, function (response) {
+        // Close reactions modal and focus on input field
+        UIkit.modal('#stickers').hide();
+        UIkit.modal('#emojis').hide();
+        jQuery('#reply').focus();
+        loadReplies();
+    });
+}
