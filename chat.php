@@ -121,11 +121,11 @@ $profile_id = um_profile_id();
                 <ul class="uk-switcher uk-margin">                  
                     <li>
                         <h3 class="uk-card-title uk-text-center">Welcome back!</h3>
-                        <?php echo do_shortcode('[ultimatemember form_id="2041"]'); ?>
+                        <?php echo do_shortcode('[ultimatemember form_id="2159"]'); ?>
                     </li>
                     <li>
                         <h3 class="uk-card-title uk-text-center">Sign up today. It's free!</h3>
-                        <?php echo do_shortcode('[ultimatemember form_id="2040"]'); ?>
+                        <?php echo do_shortcode('[ultimatemember form_id="2158"]'); ?>
                     </li>                    
                     <li>
                         <h3 class="uk-card-title uk-text-center">Forgot your password?</h3>
