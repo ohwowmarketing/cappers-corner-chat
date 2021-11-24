@@ -10,7 +10,7 @@ $profile_id = um_profile_id();
 <div class="--cappers-chat-plugin">
     <div class="ui-comments">
         <form action="" class="ui-comments-msgboard uk-animation-toggle" tabindex="0" id="replyForm">
-            <?php if (is_user_logged_in() && array_intersect(['cappers', 'cappers_chat', 'administrator'], wp_get_current_user()->roles)) : ?>
+            <?php if (is_user_logged_in() && array_intersect(['cappers', 'cappers_chat'], wp_get_current_user()->roles)) : ?>
                 <input type="text" name="ui-cm-field" class="ui-cm-field" placeholder="Write a comment" autocomplete="off" id="reply" required>
                 <div class="ui-cm-widget-controls">
                     <div>
@@ -92,7 +92,7 @@ $profile_id = um_profile_id();
                         <a class="uk-margin-remove"><img src="<?php echo get_avatar_url(wp_get_current_user()->ID); ?>" class="uk-border-circle" style="height: 20px; width: 20px;"></a>
                         <div uk-dropdown="offset: 12; pos: bottom-right">
                             <ul class="uk-nav uk-dropdown-nav">
-                                <?php if (is_user_logged_in() && array_intersect(['cappers', 'cappers_chat', 'administrator'], wp_get_current_user()->roles)) : ?>
+                                <?php if (is_user_logged_in() && array_intersect(['cappers', 'cappers_chat'], wp_get_current_user()->roles)) : ?>
                                     <li><a href="<?php echo esc_url( site_url('cappers-profile/'.$profile_id) ); ?>">Profile</a></li>
                                     <li><a href="<?php echo esc_url( site_url('logout') ); ?>">Logout</a></li>
                                 <?php else : ?>
