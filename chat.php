@@ -87,8 +87,8 @@ $profile_id = um_profile_id();
             <h1 class="ui-ch-channel" id="heading"></h1>
             <div class="ui-ch-action">
                 <div class="ui-ch-moreaction">
-                     <select class="uk-select" id="channels" style="display: none;"></select>
-                    <div class="ui-ch-moreaction">
+                    <select class="uk-select" id="channels" style="display: none;"></select>
+                    <div class="ui-ch-moreaction-nav">
                         <a class="uk-margin-remove"><img src="<?php echo get_avatar_url(wp_get_current_user()->ID); ?>" class="uk-border-circle" style="height: 20px; width: 20px;"></a>
                         <div uk-dropdown="offset: 12; pos: bottom-right">
                             <ul class="uk-nav uk-dropdown-nav">
