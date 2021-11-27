@@ -27,7 +27,7 @@ function loadChannels() {
             } else {
                 selected = ''
             }
-            jQuery('#channels').append('<option value="' + channel.id + '" ' + selected +'>' + channel.name + '</option>');
+            jQuery('#channels').append('<option value="' + channel.id + '">' + channel.name + '</option>');
         });
         loadReplies() // for the first time
     });
