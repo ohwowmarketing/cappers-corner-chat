@@ -14,15 +14,15 @@ $profile_id = um_profile_id();
                 <input type="text" name="ui-cm-field" class="ui-cm-field" placeholder="Write a comment" autocomplete="off" id="reply" required>
                 <div class="ui-cm-widget-controls">
                     <div>
-                        <a href="#stickers" uk-icon="icon: happy" uk-toggle></a>
-                        <div id="stickers" uk-modal>
+                        <a href="#emojis" uk-icon="icon: happy" uk-toggle></a>
+                        <div id="stickers" uk-modal hidden>
                             <div class="uk-modal-dialog uk-modal-body">
                                 <div class="uk-grid-small" uk-grid>
                                     <div>
-                                        <a href="#stickers" class="uk-button uk-button-primary uk-button-small" uk-toggle>Stickers</a>
+                                        <a href="#emojis" class="uk-button uk-button-primary uk-button-small" uk-toggle>Emojis</a>
                                     </div>
                                     <div>
-                                        <a href="#emojis" class="uk-button uk-button-primary uk-button-small" uk-toggle>Emojis</a>
+                                        <a href="#stickers" class="uk-button uk-button-primary uk-button-small" uk-toggle>Stickers</a>
                                     </div>
                                 </div>
                                 <div class="uk-child-width-1-4 uk-child-width-1-6@m uk-flex-middle" uk-grid>
@@ -56,24 +56,25 @@ $profile_id = um_profile_id();
                                 </div>
                             </div>
                         </div>
-                        <div id="emojis" uk-modal>
-                            <div class="uk-modal-dialog uk-modal-body">
-                                <div class="uk-grid-small" uk-grid>
-                                    <div>
-                                        <a href="#stickers" class="uk-button uk-button-primary uk-button-small" uk-toggle>Stickers</a>
-                                    </div>
+                        <div id="emojis" class="uk-flex-top" uk-modal>
+                            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+                                <div class="uk-grid-small" uk-grid hidden>
                                     <div>
                                         <a href="#emojis" class="uk-button uk-button-primary uk-button-small" uk-toggle>Emojis</a>
                                     </div>
+
+                                    <div>
+                                        <a href="#stickers" class="uk-button uk-button-primary uk-button-small" uk-toggle>Stickers</a>
+                                    </div>
                                 </div>
-                                <p class="uk-text-large">
+                                <div class="uk-text-large">
                                     <?php include 'emojis.php'; ?>
                                     <?php
                                         foreach ($emojis as $emoji) {
                                             echo '<span class="uk-margin-small-right" style="cursor: pointer;" onclick="sendEmoji(\'' . $emoji . '\');">&#x' . $emoji . ';</span>';
                                         }
                                     ?>
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -122,7 +123,7 @@ $profile_id = um_profile_id();
 
                 <ul class="uk-switcher uk-margin">                  
                     <li>
-                        <h3 class="uk-card-title uk-text-center">Welcome back!</h3>
+                        <h3 class="uk-card-title uk-text-center">Welcome!</h3>
                         <?php echo do_shortcode('[ultimatemember form_id="2159"]'); ?>
                     </li>
                     <li>
