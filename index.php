@@ -37,10 +37,16 @@ register_activation_hook(__FILE__, 'activate');
 
 function chat() {
 
+    wp_enqueue_style( 'fontawesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css' );
+    wp_enqueue_style( 'emojis-css', '/wp-content/plugins/cappers-corner-chat/emojis/emojionearea.min.css' );
+    
+
     // Load jQuery with AJAX API URL
 
     wp_enqueue_script('jquery');
-    wp_enqueue_script('uikit', 'https://cdn.jsdelivr.net/npm/uikit@3.9.1/dist/js/uikit-icons.min.js"');
+    wp_enqueue_script('uikit', 'https://cdn.jsdelivr.net/npm/uikit@3.9.1/dist/js/uikit-icons.min.js');
+    wp_enqueue_script('emojis-js', '/wp-content/plugins/cappers-corner-chat/emojis/emojionearea.js');
+    wp_enqueue_script('emojis', '/wp-content/plugins/cappers-corner-chat/emojis-picker.js');
     wp_enqueue_script('scripts', '/wp-content/plugins/cappers-corner-chat/scripts.js');
     wp_localize_script('scripts', 'Obj', [
         'url' => admin_url('admin-ajax.php'),

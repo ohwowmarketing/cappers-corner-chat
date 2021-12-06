@@ -11,77 +11,12 @@ $profile_id = um_profile_id();
     <div class="ui-comments">
         <form action="" class="ui-comments-msgboard uk-animation-toggle" tabindex="0" id="replyForm">
             <?php if (is_user_logged_in() && array_intersect(['cappers', 'cappers_chat'], wp_get_current_user()->roles)) : ?>
-                <input type="text" name="ui-cm-field" class="ui-cm-field" placeholder="Write a comment" autocomplete="off" id="reply" required>
-                <div class="ui-cm-widget-controls">
-                    <div>
-                        <a href="#emojis" uk-icon="icon: happy" uk-toggle></a>
-                        <div id="stickers" uk-modal hidden>
-                            <div class="uk-modal-dialog uk-modal-body">
-                                <div class="uk-grid-small" uk-grid>
-                                    <div>
-                                        <a href="#emojis" class="uk-button uk-button-primary uk-button-small" uk-toggle>Emojis</a>
-                                    </div>
-                                    <div>
-                                        <a href="#stickers" class="uk-button uk-button-primary uk-button-small" uk-toggle>Stickers</a>
-                                    </div>
-                                </div>
-                                <div class="uk-child-width-1-4 uk-child-width-1-6@m uk-flex-middle" uk-grid>
-                                    <div>
-                                        <img src="<?php echo plugins_url(); ?>/cappers-corner-chat/images/stickers/angel-girl.png" style="cursor: pointer;" onclick="sendSticker('angel-girl');">
-                                    </div>
-                                    <div>
-                                        <img src="<?php echo plugins_url(); ?>/cappers-corner-chat/images/stickers/angry-girl.png" style="cursor: pointer;" onclick="sendSticker('angry-girl');">
-                                    </div>
-                                    <div>
-                                        <img src="<?php echo plugins_url(); ?>/cappers-corner-chat/images/stickers/dance-girl.png" style="cursor: pointer;" onclick="sendSticker('dance-girl');">
-                                    </div>
-                                    <div>
-                                        <img src="<?php echo plugins_url(); ?>/cappers-corner-chat/images/stickers/exclamation-girl.png" style="cursor: pointer;" onclick="sendSticker('exclamation-girl');">
-                                    </div>
-                                    <div>
-                                        <img src="<?php echo plugins_url(); ?>/cappers-corner-chat/images/stickers/heart-girl.png" style="cursor: pointer;" onclick="sendSticker('heart-girl');">
-                                    </div>
-                                    <div>
-                                        <img src="<?php echo plugins_url(); ?>/cappers-corner-chat/images/stickers/music-girl.png" style="cursor: pointer;" onclick="sendSticker('music-girl');">
-                                    </div>
-                                    <div>
-                                        <img src="<?php echo plugins_url(); ?>/cappers-corner-chat/images/stickers/scared-girl.png" style="cursor: pointer;" onclick="sendSticker('scared-girl');">
-                                    </div>
-                                    <div>
-                                        <img src="<?php echo plugins_url(); ?>/cappers-corner-chat/images/stickers/sport-girl.png" style="cursor: pointer;" onclick="sendSticker('sport-girl');">
-                                    </div>
-                                    <div>
-                                        <img src="<?php echo plugins_url(); ?>/cappers-corner-chat/images/stickers/what-girl.png" style="cursor: pointer;" onclick="sendSticker('what-girl');">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="emojis" class="uk-flex-top" uk-modal>
-                            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-                                <div class="uk-grid-small" uk-grid hidden>
-                                    <div>
-                                        <a href="#emojis" class="uk-button uk-button-primary uk-button-small" uk-toggle>Emojis</a>
-                                    </div>
-
-                                    <div>
-                                        <a href="#stickers" class="uk-button uk-button-primary uk-button-small" uk-toggle>Stickers</a>
-                                    </div>
-                                </div>
-                                <div class="uk-text-large">
-                                    <?php include 'emojis.php'; ?>
-                                    <?php
-                                        foreach ($emojis as $emoji) {
-                                            echo '<span class="uk-margin-small-right" style="cursor: pointer;" onclick="sendEmoji(\'' . $emoji . '\');">&#x' . $emoji . ';</span>';
-                                        }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <input type="text" name="ui-cm-field" class="ui-cm-field" placeholder="Write a comment" autocomplete="off" id="reply">
+                <div class="ui-cm-widget-controls" >
                     <button type="submit" name="ui-msg-submit" class="ui-msg-submit"></button>
                 </div>
             <?php else : ?>
-                <a href="#form-panel" class="ui-cm-field" uk-toggle="animation: uk-animation-fade">Login or join now to post a reply</a>
+                <a href="#form-panel" class="ui-cm-field" uk-toggle="animation: uk-animation-fade">Click here to Login or join now to post a reply</a>
             <?php endif; ?>
         </form>
         <header class="ui-comments-header uk-light">
