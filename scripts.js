@@ -1,12 +1,10 @@
 let selectedChannel = undefined;
 
-jQuery(document).ready(function() {
     loadChannels();
     // Check for new replies repeatedly
     setInterval(() => {
-        loadReplies()
-    }, 50000);
-});
+        loadReplies();
+    }, 7500);
 
 // Load and render channels
 
@@ -93,6 +91,7 @@ jQuery('#replyForm').submit(function(event) {
         // Reset input field and focus on it
         jQuery('#reply').val('');
         jQuery('#reply').focus();
+        jQuery('.emojionearea-editor').text('');
         loadReplies();
     });
 });
@@ -122,8 +121,9 @@ function sendEmoji(emoji) {
         'action': 'repliesStore',
     }, function (response) {
         // Close reactions modal and focus on input field
-        UIkit.modal('#stickers').hide();
-        UIkit.modal('#emojis').hide();
+        // UIkit.modal('#stickers').hide();
+        // UIkit.modal('#emojis').hide();
+        // UIkit.dropdown('.ui-emojis-wrapper').hide(100);
         jQuery('#reply').focus();
         loadReplies();
     });
