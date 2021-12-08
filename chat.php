@@ -9,9 +9,9 @@ $profile_id = um_profile_id();
 ?>
 <div class="--cappers-chat-plugin">
     <div class="ui-comments">
-        <form action="" class="ui-comments-msgboard uk-animation-toggle" tabindex="0" id="replyForm">
+        <form action="" class="ui-comments-msgboard uk-animation-toggle" tabindex="0" id="replyForm"">
             <?php if (is_user_logged_in() && array_intersect(['cappers', 'cappers_chat'], wp_get_current_user()->roles)) : ?>
-                <input type="text" name="ui-cm-field" class="ui-cm-field" placeholder="Write a comment" autocomplete="off" id="reply">
+                <input type="hidden" name="ui-cm-field" class="ui-cm-field" placeholder="Write a comment" autocomplete="off" id="reply" required>
                 <div class="ui-cm-widget-controls" >
                     <button type="submit" name="ui-msg-submit" class="ui-msg-submit"></button>
                 </div>
