@@ -16,7 +16,7 @@ $profile_id = um_profile_id();
                     <button type="submit" name="ui-msg-submit" class="ui-msg-submit"></button>
                 </div>
             <?php else : ?>
-                <a href="#form-panel" class="ui-cm-field" uk-toggle="animation: uk-animation-fade">Click here to Login or join now to post a reply!</a>
+                <a href="#form-panel" class="ui-cm-field" uk-toggle="animation: uk-animation-fade">Click here to Login or join now to post a reply</a>
             <?php endif; ?>
         </form>
         <header class="ui-comments-header uk-light">
