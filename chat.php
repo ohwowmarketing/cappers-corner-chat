@@ -1,7 +1,7 @@
-<?php 
+<?php
 
 // Include Emojis
-include 'emojis.php'; 
+include 'emojis.php';
 
 // Check Ultimate Member ID
 $profile_id = um_profile_id();
@@ -16,7 +16,7 @@ $profile_id = um_profile_id();
                     <button type="submit" name="ui-msg-submit" class="ui-msg-submit"></button>
                 </div>
             <?php else : ?>
-                <a href="#form-panel" class="ui-cm-field" uk-toggle="animation: uk-animation-fade">Click here to Login or join now to post a reply</a>
+                <a href="#form-panel" class="ui-cm-field" uk-toggle="animation: uk-animation-fade">Click here to Login or join now to post a reply!</a>
             <?php endif; ?>
         </form>
         <header class="ui-comments-header uk-light">
@@ -48,7 +48,7 @@ $profile_id = um_profile_id();
 
         <div id="form-panel" class="uk-position-cover uk-overlay uk-overlay-default uk-flex uk-flex-middle" uk-overflow-auto hidden>
             <a href="#form-panel" class="uk-position-small uk-position-top-rigt --close-overlay" uk-toggle="animation: uk-animation-fade">&times;</a>
-            
+
             <div class="uk-card uk-card-default uk-card-body uk-box-shadow-large">
                 <ul class="uk-tab uk-flex-center" uk-grid uk-switcher="animation: uk-animation-fade">
                     <li><a href="#">Log In</a></li>
@@ -56,7 +56,7 @@ $profile_id = um_profile_id();
                     <li class="uk-hidden"><a href="#">Forgot Password?</a></li>
                 </ul>
 
-                <ul class="uk-switcher uk-margin">                  
+                <ul class="uk-switcher uk-margin">
                     <li>
                         <h3 class="uk-card-title uk-text-center">Welcome!</h3>
                         <?php echo do_shortcode('[ultimatemember form_id="2159"]'); ?>
@@ -64,7 +64,7 @@ $profile_id = um_profile_id();
                     <li>
                         <h3 class="uk-card-title uk-text-center">Sign up today. It's free!</h3>
                         <?php echo do_shortcode('[ultimatemember form_id="2158"]'); ?>
-                    </li>                    
+                    </li>
                     <li>
                         <h3 class="uk-card-title uk-text-center">Forgot your password?</h3>
                         <?php echo do_shortcode('[ultimatemember_password]'); ?>
