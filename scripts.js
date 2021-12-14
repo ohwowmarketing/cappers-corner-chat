@@ -54,7 +54,7 @@ function loadReplies() {
                     '"></a><div class="content"><a class="author">' +
                     reply.user +
                     '</a><div class="metadata"><time class="date">' +
-                    reply.created_at +
+                    moment.unix(reply.created_at).format('MMM Do, YYYY H:mm a') +
                     '</time></div><div class="message">' +
                     reply.reply +
                     '</div></div></div>'

@@ -38,7 +38,7 @@ function repliesIndex() {
             $reply->user = 'Unknown';
             $reply->reply = '<span class="uk-text-muted">This reply has been deleted</span>';
         }
-        $reply->created_at = date('F j, Y g:i a', strtotime($reply->created_at));
+	    $reply->created_at = date('U', strtotime($reply->created_at));
         // Check if sticker
         if (preg_match('/sticker:/i', $reply->reply)) {
             $sticker = substr($reply->reply, strpos($reply->reply, ':') + 1);

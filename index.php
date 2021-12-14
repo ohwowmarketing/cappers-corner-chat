@@ -39,13 +39,14 @@ function chat() {
 
     wp_enqueue_style( 'fontawesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css' );
     wp_enqueue_style( 'emojis-css', '/wp-content/plugins/cappers-corner-chat/emojis/emojionearea.min.css' );
-    
+
 
     // Load jQuery with AJAX API URL
 
     wp_enqueue_script('jquery');
     wp_enqueue_script('uikit', 'https://cdn.jsdelivr.net/npm/uikit@3.9.1/dist/js/uikit-icons.min.js');
-    // wp_enqueue_script('emojis-config', '/wp-content/plugins/cappers-corner-chat/emojis/js/config.js');
+	wp_enqueue_script('moment', 'https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js');
+	// wp_enqueue_script('emojis-config', '/wp-content/plugins/cappers-corner-chat/emojis/js/config.js');
     // wp_enqueue_script('emojis-util', '/wp-content/plugins/cappers-corner-chat/emojis/js/util.js');
     // wp_enqueue_script('emojis-jarea', '/wp-content/plugins/cappers-corner-chat/emojis/js/jquery.emojiarea.js');
     // wp_enqueue_script('emojis-picker', '/wp-content/plugins/cappers-corner-chat/emojis/js/emoji-picker.js');
