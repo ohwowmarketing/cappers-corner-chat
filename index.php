@@ -40,7 +40,6 @@ function chat() {
     wp_enqueue_style( 'fontawesome', 'https://use.fontawesome.com/releases/v5.15.4/css/all.css' );
     wp_enqueue_style( 'emojis-css', '/wp-content/plugins/cappers-corner-chat/emojis/emojionearea.min.css' );
 
-
     // Load jQuery with AJAX API URL
 
     wp_enqueue_script('jquery');
@@ -61,7 +60,7 @@ function chat() {
 
     include 'chat.php';
 }
-add_shortcode( 'cappers-corner-chat', 'chat');
+add_shortcode('cappers-corner-chat', 'chat');
 
 /************/
 /* Back End */

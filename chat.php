@@ -19,29 +19,31 @@ $profile_id = um_profile_id();
                 <a href="#form-panel" class="ui-cm-field" uk-toggle="animation: uk-animation-fade">Click here to Login or join now to post a reply</a>
             <?php endif; ?>
         </form>
-        <header class="ui-comments-header uk-light">
-            <h1 class="ui-ch-channel" id="heading"></h1>
-            <div class="ui-ch-action">
-                <div class="ui-ch-moreaction">
-                    <select class="uk-select" id="channels" style="display: none;">
-                        <option value="0" selected disabled>Select Channel</option>
-                    </select>
-                    <div class="ui-ch-moreaction-nav">
-                        <a class="uk-margin-remove"><img src="<?php echo get_avatar_url(wp_get_current_user()->ID); ?>" class="uk-border-circle" style="height: 20px; width: 20px;"></a>
-                        <div uk-dropdown="offset: 12; pos: bottom-right">
-                            <ul class="uk-nav uk-dropdown-nav">
-                                <?php if (is_user_logged_in() && array_intersect(['cappers', 'cappers_chat'], wp_get_current_user()->roles)) : ?>
-                                    <li><a href="<?php echo esc_url( site_url('cappers-profile/'.$profile_id) ); ?>">Profile</a></li>
-                                    <li><a href="<?php echo esc_url( site_url('logout') ); ?>">Logout</a></li>
-                                <?php else : ?>
-                                    <li><a id="form-btn" href="#form-panel" uk-toggle="animation: uk-animation-fade">Login</a></li>
-                                <?php endif; ?>
-                            </ul>
+        <nav class="uk-navbar-container ui-comments-header uk-light" uk-navbar>
+            <div class="uk-navbar-left">
+                <h1 class="ui-ch-channel" style="min-width: inherit;">&nbsp;</h1>
+                <ul class="uk-navbar-nav" id="channel-nav"></ul>
+            </div>
+            <div class="uk-navbar-right">
+                <div class="ui-ch-action">
+                    <div class="ui-ch-moreaction">
+                        <div class="ui-ch-moreaction-nav">
+                            <a class="uk-margin-remove"><img src="<?php echo get_avatar_url(wp_get_current_user()->ID); ?>" class="uk-border-circle" style="height: 20px; width: 20px;"></a>
+                            <div uk-dropdown="offset: 12; pos: bottom-right">
+                                <ul class="uk-nav uk-dropdown-nav">
+                                    <?php if (is_user_logged_in() && array_intersect(['cappers', 'cappers_chat'], wp_get_current_user()->roles)) : ?>
+                                        <li><a href="<?php echo esc_url( site_url('cappers-profile/'.$profile_id) ); ?>">Profile</a></li>
+                                        <li><a href="<?php echo esc_url( site_url('logout') ); ?>">Logout</a></li>
+                                    <?php else : ?>
+                                        <li><a id="form-btn" href="#form-panel" uk-toggle="animation: uk-animation-fade">Login</a></li>
+                                    <?php endif; ?>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </header>
+        </nav>
         <div class="ui-comments-body" id="replies-body">
             <div id="replies"></div>
         </div>

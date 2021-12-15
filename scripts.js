@@ -1,10 +1,10 @@
 let selectedChannel = undefined;
 
-    loadChannels();
-    // Check for new replies repeatedly
-    setInterval(() => {
-        loadReplies();
-    }, 7500);
+loadChannels();
+// Check for new replies repeatedly
+setInterval(() => {
+    loadReplies();
+}, 7500);
 
 // Load and render channels
 
@@ -13,29 +13,26 @@ function loadChannels() {
         'action': 'ChannelsIndex',
     }, function (response) {
         let channels = JSON.parse(response);
-        if (channels.length > 0) {
-            jQuery('#channels').show(); // Unhide the heading
-        }
         let selected = false;
         channels.map((channel, key) => {
+            jQuery('#channel-nav').append('<li class="" onclick="changeChannel(' + channel.id + ')" id="channel-link-' + channel.id + '"><a>' + channel.name + '</a></li>');
             if (eval(channel.main)) {
-                selected = 'selected';
                 selectedChannel = channel.id;
-                jQuery('#heading').text(channel.name); // Change heading
-            } else {
-                selected = ''
+                jQuery('#channel-link-' + channel.id).addClass('uk-active');
             }
-            jQuery('#channels').append('<option value="' + channel.id + '">' + channel.name + '</option>');
         });
         loadReplies() // for the first time
     });
 }
 
-jQuery('#channels').change(function() {
-    selectedChannel = jQuery('#channels').val();
-    jQuery('#heading').text(jQuery('#channels').find('option:selected').text()); // Change heading
-    loadReplies()
-});
+function changeChannel(id) {
+    jQuery('#channel-nav li').each(function(index, element) {
+        jQuery(this).removeClass('uk-active');
+    })
+    jQuery('#channel-link-' + id).addClass('uk-active');
+    selectedChannel = id;
+    loadReplies();
+}
 
 // Load and render replies
 
@@ -140,10 +137,10 @@ function sendEmoji(emoji) {
 
 // Like a reply
 
-function like(reply, author) {
+function like(reply, user_id) {
     jQuery.post(Obj.url, {
         'reply': reply,
-        'author': author,
+        'user_id': user_id,
         'action': 'repliesLike',
     }, function (response) {
         loadReplies();
