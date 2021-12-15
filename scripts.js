@@ -57,12 +57,12 @@ function loadReplies() {
                     moment.unix(reply.created_at).format('MMM Do, YYYY h:mm a') +
                     '</time></div><div class="message">' +
                     reply.reply +
-                    '</div><div class="uk-text-bold uk-text-small"><i class="far fa-heart uk-margin-small-right" onclick="like(' +
+                    '</div><div class="uk-text-bold uk-text-small"><i class="fas fa-thumbs-up uk-margin-small-right" onclick="like(' +
                     reply.id + ',' +
                     reply.user_id +
                     ')"></i>' +
                     reply.likes +
-                    ' likes</div></div></div>'
+                    '</div></div></div>'
                 );
             });
         } else {
