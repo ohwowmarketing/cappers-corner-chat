@@ -37,7 +37,7 @@ register_activation_hook(__FILE__, 'activate');
 
 function chat() {
 
-    wp_enqueue_style( 'fontawesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css' );
+    wp_enqueue_style( 'fontawesome', 'https://use.fontawesome.com/releases/v5.15.4/css/all.css' );
     wp_enqueue_style( 'emojis-css', '/wp-content/plugins/cappers-corner-chat/emojis/emojionearea.min.css' );
 
 

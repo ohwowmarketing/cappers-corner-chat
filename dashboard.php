@@ -4,7 +4,7 @@
 
     // Insert Channel
     if (isset($_POST['name'])) {
-        $table = $wpdb->prefix . 'cappers_corner_channels';
+        $table = $wpdb->prefix . 'cappers_corner_chat_channels';
         $data = array(
             'name' => $_POST['name'],
             'main' => false,
@@ -15,7 +15,7 @@
     if (isset($_POST['action'])) {
         // Make a Default Channel
         if ($_POST['action'] == 'makeDefault') {
-            $table = $wpdb->prefix . 'cappers_corner_channels';
+            $table = $wpdb->prefix . 'cappers_corner_chat_channels';
             $wpdb->query(
                 $wpdb->prepare("
                     UPDATE " . $table . "
@@ -31,7 +31,7 @@
         }
         // Hide a Channel from Visitors
         if ($_POST['action'] == 'disableChannel') {
-            $table = $wpdb->prefix . 'cappers_corner_channels';
+            $table = $wpdb->prefix . 'cappers_corner_chat_channels';
             $wpdb->update($table, [
                 'enabled' => false,
             ],
@@ -41,7 +41,7 @@
         }
         // Show a Channel for Visitors
         if ($_POST['action'] == 'enableChannel') {
-            $table = $wpdb->prefix . 'cappers_corner_channels';
+            $table = $wpdb->prefix . 'cappers_corner_chat_channels';
             $wpdb->update($table, [
                 'enabled' => true,
             ],
@@ -51,7 +51,7 @@
         }
         // Hide a Reply for Visitors
         if ($_POST['action'] == 'disableReply') {
-            $table = $wpdb->prefix . 'cappers_corner_replies';
+            $table = $wpdb->prefix . 'cappers_corner_chat_replies';
             $wpdb->update($table, [
                 'enabled' => false,
             ],
@@ -61,7 +61,7 @@
         }
         // Show a Reply for Visitors
         if ($_POST['action'] == 'enableReply') {
-            $table = $wpdb->prefix . 'cappers_corner_replies';
+            $table = $wpdb->prefix . 'cappers_corner_chat_replies';
             $wpdb->update($table, [
                 'enabled' => true,
             ],
@@ -72,8 +72,8 @@
     }
 
     // Get Data
-    $channels = $wpdb->get_results("select * from " . $wpdb->prefix . "cappers_corner_channels", OBJECT);
-    $replies = $wpdb->get_results("select * from " . $wpdb->prefix . "cappers_corner_replies", OBJECT);
+    $channels = $wpdb->get_results("select * from " . $wpdb->prefix . "cappers_corner_chat_channels", OBJECT);
+    $replies = $wpdb->get_results("select * from " . $wpdb->prefix . "cappers_corner_chat_replies", OBJECT);
 
 ?>
 
@@ -154,7 +154,7 @@
                             </form>
                         <?php endif; ?>
                    </td>
-                    <td><a href="<?php echo get_edit_profile_url($reply->user); ?>"><?php echo get_userdata($reply->user)->display_name; ?></a></td>
+                    <td><a href="<?php echo get_edit_profile_url($reply->user_id); ?>"><?php echo get_userdata($reply->user_id)->display_name; ?></a></td>
                     <td><?php echo date('F j, Y g:i a', strtotime($reply->created_at)); ?></td>
                 </tr>
             <?php endforeach; ?>
