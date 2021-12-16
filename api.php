@@ -79,17 +79,14 @@ function repliesLike() {
 	global $wpdb;
 	$table = $wpdb->prefix . 'cappers_corner_chat_replies';
 	// Get current number of likes
-	$reply = $wpdb->get_results("select user_id, likes from " . $table . " where id = " . $_POST['reply'] . " limit 1", OBJECT);
-	// Only update if author is not user
-	if ($reply[0]->user_id != $_POST['user_id']) {
-		// Update with increased number of likes
-		$wpdb->update( $table, [
-			'likes' => intval( $reply[0]->likes ) + 1,
-		],
-			[
-				'id' => $_POST['reply'],
-			] );
-	}
+	$likes = $wpdb->get_results("select likes from " . $table . " where id = " . $_POST['reply'] . " limit 1", OBJECT);
+	// Update with increased number of likes
+	$wpdb->update( $table, [
+		'likes' => intval( $likes[0]->likes ) + 1,
+	],
+		[
+			'id' => $_POST['reply'],
+		] );
 	wp_die();
 }
 

@@ -138,11 +138,14 @@ function sendEmoji(emoji) {
 // Like a reply
 
 function like(reply, user_id) {
-    jQuery.post(Obj.url, {
-        'reply': reply,
-        'user_id': user_id,
-        'action': 'repliesLike',
-    }, function (response) {
-        loadReplies();
-    })
+    if (Cookies.get('like-' + reply) === undefined) {
+        jQuery.post(Obj.url, {
+            'reply': reply,
+            'user_id': user_id,
+            'action': 'repliesLike',
+        }, function (response) {
+            loadReplies();
+        })
+    }
+    Cookies.set('like-' + reply, true);
 }
