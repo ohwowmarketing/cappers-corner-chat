@@ -55,8 +55,9 @@ function loadReplies() {
                     '</time></div><div class="message">' +
                     reply.reply +
                     '</div><div class="uk-text-bold uk-text-small"><i class="fas fa-thumbs-up uk-margin-small-right" onclick="like(' +
-                    reply.id + ',' +
-                    reply.user_id +
+                    reply.id +
+                    ')"></i><i class="fas fa-thumbs-down uk-margin-small-right" onclick="dislike(' +
+                    reply.id +
                     ')"></i>' +
                     reply.likes +
                     '</div></div></div>'
@@ -137,15 +138,22 @@ function sendEmoji(emoji) {
 
 // Like a reply
 
-function like(reply, user_id) {
-    if (Cookies.get('like-' + reply) === undefined) {
-        jQuery.post(Obj.url, {
-            'reply': reply,
-            'user_id': user_id,
-            'action': 'repliesLike',
-        }, function (response) {
-            loadReplies();
-        })
-    }
-    Cookies.set('like-' + reply, true);
+function like(reply) {
+    jQuery.post(Obj.url, {
+        'reply': reply,
+        'action': 'repliesLike',
+    }, function (response) {
+        loadReplies();
+    })
+}
+
+// Dislike a reply
+
+function dislike(reply) {
+    jQuery.post(Obj.url, {
+        'reply': reply,
+        'action': 'repliesDislike',
+    }, function (response) {
+        loadReplies();
+    })
 }

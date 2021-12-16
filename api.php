@@ -90,3 +90,20 @@ function repliesLike() {
 	wp_die();
 }
 
+// Replies Dislike
+
+add_action('wp_ajax_repliesDislike', 'repliesDislike');
+function repliesDislike() {
+	global $wpdb;
+	$table = $wpdb->prefix . 'cappers_corner_chat_replies';
+	// Get current number of likes
+	$likes = $wpdb->get_results("select likes from " . $table . " where id = " . $_POST['reply'] . " limit 1", OBJECT);
+	// Update with increased number of likes
+	$wpdb->update( $table, [
+		'likes' => intval( $likes[0]->likes ) - 1,
+	],
+		[
+			'id' => $_POST['reply'],
+		] );
+	wp_die();
+}
