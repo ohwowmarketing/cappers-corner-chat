@@ -78,3 +78,5 @@ $profile_id = um_profile_id();
 
     </div>
 </div>
+
+<div id="root"></div>

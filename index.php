@@ -52,8 +52,8 @@ function chat() {
     // wp_enqueue_script('emojis-picker', '/wp-content/plugins/cappers-corner-chat/emojis/js/emoji-picker.js');
     wp_enqueue_script('emojis-js', '/wp-content/plugins/cappers-corner-chat/emojis/emojionearea.js');
     wp_enqueue_script('emojis', '/wp-content/plugins/cappers-corner-chat/emojis-picker.js');
-    wp_enqueue_script('scripts', '/wp-content/plugins/cappers-corner-chat/scripts.js');
-    wp_localize_script('scripts', 'Obj', [
+    wp_enqueue_script('custom', '/wp-content/plugins/cappers-corner-chat/custom.js');
+    wp_localize_script('custom', 'Obj', [
         'url' => admin_url('admin-ajax.php'),
     ]);
 
