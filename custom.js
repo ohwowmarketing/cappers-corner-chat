@@ -42,29 +42,31 @@ function loadReplies() {
         'channel': selectedChannel,
     }, function (response) {
         let replies = JSON.parse(response);
-        if (replies.length > 0) {
-            jQuery('#replies').html('');
-            replies.map((reply, key) => {
-                jQuery('#replies').append('' +
-                    '<div class="ui-comment"><a class="avatar"><img class="uk-border-circle" width="42" height="42" src="' +
-                    reply.image +
-                    '"></a><div class="content"><a class="author">' +
-                    reply.user +
-                    '</a><div class="metadata"><time class="date">' +
-                    moment.unix(reply.created_at).format('MMM Do, YYYY h:mm a') +
-                    '</time></div><div class="message">' +
-                    reply.reply +
-                    '</div><div class="uk-text-bold uk-text-small"><i class="fas fa-thumbs-up uk-margin-small-right" onclick="like(' +
-                    reply.id +
-                    ')"></i><i class="fas fa-thumbs-down uk-margin-small-right" onclick="dislike(' +
-                    reply.id +
-                    ')"></i>' +
-                    reply.likes +
-                    '</div></div></div>'
-                );
-            });
-        } else {
-            jQuery('#replies').html('<div class="uk-position-center uk-text-center --welcome">It\'s empty in here. Try writing a comment. <small class="uk-display-block uk-text-meta">Comments are subject to site moderator\'s discretionary removal.</small></div>');
+        if (replies.length !== jQuery('#replies').children().length) {
+            if (replies.length > 0) {
+                jQuery('#replies').html('');
+                replies.map((reply, key) => {
+                    jQuery('#replies').append('' +
+                        '<div class="ui-comment"><a class="avatar"><img class="uk-border-circle" width="42" height="42" src="' +
+                        reply.image +
+                        '"></a><div class="content"><a class="author">' +
+                        reply.user +
+                        '</a><div class="metadata"><time class="date">' +
+                        moment.unix(reply.created_at).format('MMM Do, YYYY h:mm a') +
+                        '</time></div><div class="message">' +
+                        reply.reply +
+                        '</div><div class="uk-text-bold uk-text-small"><i class="fas fa-thumbs-up uk-margin-small-right" onclick="like(' +
+                        reply.id +
+                        ')"></i><i class="fas fa-thumbs-down uk-margin-small-right" onclick="dislike(' +
+                        reply.id +
+                        ')"></i>' +
+                        reply.likes +
+                        '</div></div></div>'
+                    );
+                });
+            } else {
+                jQuery('#replies').html('<div class="uk-position-center uk-text-center --welcome">It\'s empty in here. Try writing a comment. <small class="uk-display-block uk-text-meta">Comments are subject to site moderator\'s discretionary removal.</small></div>');
+            }
         }
         // Scroll to Bottom After Chats and Images have Loaded
         jQuery('img').each(function() {
