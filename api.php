@@ -82,11 +82,12 @@ function repliesLike() {
 	$likes = $wpdb->get_results("select likes from " . $table . " where id = " . $_POST['reply'] . " limit 1", OBJECT);
 	// Update with increased number of likes
 	$wpdb->update( $table, [
-		'likes' => intval( $likes[0]->likes ) + 1,
+		'likes' => intval($likes[0]->likes) + 1,
 	],
 		[
 			'id' => $_POST['reply'],
 		] );
+	echo intval($likes[0]->likes) + 1;
 	wp_die();
 }
 
@@ -100,10 +101,12 @@ function repliesDislike() {
 	$likes = $wpdb->get_results("select likes from " . $table . " where id = " . $_POST['reply'] . " limit 1", OBJECT);
 	// Update with increased number of likes
 	$wpdb->update( $table, [
-		'likes' => intval( $likes[0]->likes ) - 1,
+		'likes' => intval($likes[0]->likes) - 1,
 	],
 		[
 			'id' => $_POST['reply'],
 		] );
+	echo intval($likes[0]->likes) - 1;
 	wp_die();
 }
+

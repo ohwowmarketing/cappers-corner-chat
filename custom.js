@@ -25,6 +25,8 @@ function loadChannels() {
     });
 }
 
+// Change active channel
+
 function changeChannel(id) {
     jQuery('#channel-nav li').each(function(index, element) {
         jQuery(this).removeClass('uk-active');
@@ -59,9 +61,11 @@ function loadReplies() {
                         reply.id +
                         ')"></i><i class="fas fa-thumbs-down uk-margin-small-right" onclick="dislike(' +
                         reply.id +
-                        ')"></i>' +
+                        ')"></i><span id="' +
+                        reply.id +
+                        '-likes">' +
                         reply.likes +
-                        '</div></div></div>'
+                        '</span></div></div></div>'
                     );
                 });
             } else {
@@ -97,6 +101,25 @@ jQuery('#replyForm').submit(function(event) {
         jQuery('#reply').val('');
         jQuery('#reply').focus();
         jQuery('.emojionearea-editor').text('');
+        jQuery('#replies').append('' +
+            '<div class="ui-comment"><a class="avatar"><img class="uk-border-circle" width="42" height="42" src="' +
+            reply.image +
+            '"></a><div class="content"><a class="author">' +
+            reply.user +
+            '</a><div class="metadata"><time class="date">' +
+            moment.unix(reply.created_at).format('MMM Do, YYYY h:mm a') +
+            '</time></div><div class="message">' +
+            reply.reply +
+            '</div><div class="uk-text-bold uk-text-small"><i class="fas fa-thumbs-up uk-margin-small-right" onclick="like(' +
+            reply.id +
+            ')"></i><i class="fas fa-thumbs-down uk-margin-small-right" onclick="dislike(' +
+            reply.id +
+            ')"></i><span id="' +
+            reply.id +
+            '-likes">' +
+            reply.likes +
+            '</span></div></div></div>'
+        );
         loadReplies();
     });
 });
@@ -145,7 +168,8 @@ function like(reply) {
         'reply': reply,
         'action': 'repliesLike',
     }, function (response) {
-        loadReplies();
+        // Update vote
+        jQuery('#' + reply + '-likes').text(response)
     })
 }
 
@@ -156,6 +180,7 @@ function dislike(reply) {
         'reply': reply,
         'action': 'repliesDislike',
     }, function (response) {
-        loadReplies();
+        // Update vote
+        jQuery('#' + reply + '-likes').text(response)
     })
 }
