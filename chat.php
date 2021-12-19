@@ -21,7 +21,7 @@ $profile_id = um_profile_id();
         </form>
         <nav class="uk-navbar-container ui-comments-header uk-light" uk-navbar>
             <div class="uk-navbar-left">
-                <h1 class="ui-ch-channel" style="min-width: inherit;">&nbsp;</h1>
+                <div uk-tooltip="title: Select a channel" id="tooltip"><h1 class="ui-ch-channel" style="min-width: inherit;">&nbsp;</h1></div>
                 <ul class="uk-navbar-nav" id="channel-nav"></ul>
             </div>
             <div class="uk-navbar-right">

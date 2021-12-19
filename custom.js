@@ -12,10 +12,9 @@ function loadChannels() {
     jQuery.post(Obj.url, {
         'action': 'ChannelsIndex',
     }, function (response) {
-        let channels = JSON.parse(response);
-        let selected = false;
+        const channels = JSON.parse(response);
         channels.map((channel, key) => {
-            jQuery('#channel-nav').append('<li class="" onclick="changeChannel(' + channel.id + ')" id="channel-link-' + channel.id + '"><a>' + channel.name + '</a></li>');
+            jQuery('#channel-nav').append('<li onclick="changeChannel(' + channel.id + ')" id="channel-link-' + channel.id + '"><a>' + channel.name + '</a></li>');
             if (eval(channel.main)) {
                 selectedChannel = channel.id;
                 jQuery('#channel-link-' + channel.id).addClass('uk-active');
@@ -23,6 +22,8 @@ function loadChannels() {
         });
         loadReplies() // for the first time
     });
+    // Show the 'Select a channel' tooltip
+    var tooltip = UIkit.tooltip('#tooltip').show();
 }
 
 // Change active channel
@@ -43,7 +44,7 @@ function loadReplies() {
         'action': 'repliesIndex',
         'channel': selectedChannel,
     }, function (response) {
-        let replies = JSON.parse(response);
+        const replies = JSON.parse(response);
         if (replies.length !== jQuery('#replies').children().length) {
             if (replies.length > 0) {
                 jQuery('#replies').html('');
@@ -54,7 +55,7 @@ function loadReplies() {
                         '"></a><div class="content"><a class="author">' +
                         reply.user +
                         '</a><div class="metadata"><time class="date">' +
-                        moment.unix(reply.created_at).format('MMM Do, YYYY h:mm a') +
+                        moment.unix(reply.created_at).format('MMM D, YYYY h:mm A') +
                         '</time></div><div class="message">' +
                         reply.reply +
                         '</div><div class="uk-text-bold uk-text-small"><i class="fas fa-thumbs-up uk-margin-small-right" onclick="like(' +
@@ -101,24 +102,13 @@ jQuery('#replyForm').submit(function(event) {
         jQuery('#reply').val('');
         jQuery('#reply').focus();
         jQuery('.emojionearea-editor').text('');
+        console.log(reply);
         jQuery('#replies').append('' +
-            '<div class="ui-comment"><a class="avatar"><img class="uk-border-circle" width="42" height="42" src="' +
-            reply.image +
-            '"></a><div class="content"><a class="author">' +
-            reply.user +
-            '</a><div class="metadata"><time class="date">' +
-            moment.unix(reply.created_at).format('MMM Do, YYYY h:mm a') +
+            '<div class="ui-comment"><a class="avatar"><img class="uk-border-circle" width="42" height="42" src="/wp-content/plugins/ultimate-member/assets/img/default_avatar.jpg"></a><div class="content"><a class="author">You!</a><div class="metadata"><time class="date">' +
+            moment().format('MMM D, YYYY h:mm A') +
             '</time></div><div class="message">' +
-            reply.reply +
-            '</div><div class="uk-text-bold uk-text-small"><i class="fas fa-thumbs-up uk-margin-small-right" onclick="like(' +
-            reply.id +
-            ')"></i><i class="fas fa-thumbs-down uk-margin-small-right" onclick="dislike(' +
-            reply.id +
-            ')"></i><span id="' +
-            reply.id +
-            '-likes">' +
-            reply.likes +
-            '</span></div></div></div>'
+            reply +
+            '</div></div></div>'
         );
         loadReplies();
     });
@@ -144,8 +134,6 @@ function sendSticker(sticker) {
 
 */
 
-// Stickers
-
 function sendEmoji(emoji) {
     jQuery.post(Obj.url, {
         'reply': '<span class="uk-h1">&#x' + emoji + ';</span>',
@@ -169,7 +157,7 @@ function like(reply) {
         'action': 'repliesLike',
     }, function (response) {
         // Update vote
-        jQuery('#' + reply + '-likes').text(response)
+        jQuery('#' + reply + '-likes').text(parseInt(jQuery('#' + reply + '-likes').text()) + parseInt(response))
     })
 }
 
@@ -181,6 +169,6 @@ function dislike(reply) {
         'action': 'repliesDislike',
     }, function (response) {
         // Update vote
-        jQuery('#' + reply + '-likes').text(response)
+        jQuery('#' + reply + '-likes').text(parseInt(jQuery('#' + reply + '-likes').text()) + parseInt(response))
     })
 }

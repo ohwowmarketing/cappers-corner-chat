@@ -30,7 +30,12 @@ function repliesIndex() {
     global $wpdb;
     // Get all enabled replies from default channel as JSON
     $table = $wpdb->prefix . 'cappers_corner_chat_replies';
-    $replies = $wpdb->get_results("select * from " . $table . " where enabled = true and created_at between '" . $past . "' and '" . $now . "' and channel = " . $_POST['channel'], OBJECT);
+    $replies = $wpdb->get_results("
+        select * from " . $table . " where " . $table . ".enabled = true and " . $table . ".created_at between '" . $past . "' and '" . $now . "' and " . $table . ".channel = " . $_POST['channel'],
+        OBJECT
+    );
+    // select users.id, SUM(profiles.language) as something from users join profiles on users.id = profiles.user_id group by users.id, profiles.language
+    // select users.id, SUM(profiles.language) as something from users join profiles on users.id = profiles.user_id group by users.id, profiles.language
     foreach ($replies as $reply) {
         $reply->image = get_avatar_url($reply->user_id);
         $reply->user = get_userdata($reply->user_id)->user_login;
@@ -39,6 +44,11 @@ function repliesIndex() {
             $reply->reply = '<span class="uk-text-muted">This reply has been deleted</span>';
         }
 	    $reply->created_at = date('U', strtotime($reply->created_at));
+        $likes = $wpdb->get_results("
+            select * from " . $wpdb->prefix . "cappers_corner_chat_votes where reply_id = " . $reply->id,
+            OBJECT
+        );
+        $reply->likes = count($likes);
         /*
         // Check if sticker
         if (preg_match('/sticker:/i', $reply->reply)) {
@@ -65,7 +75,6 @@ function repliesStore() {
 		'reply' => stripslashes($reply),
 		'channel' => $_POST['channel'],
 		'enabled' => true,
-		'likes' => 0,
 		'user_id' => get_current_user_id(),
 	];
 	$wpdb->insert($table, $reply);
@@ -77,17 +86,30 @@ function repliesStore() {
 add_action('wp_ajax_repliesLike', 'repliesLike');
 function repliesLike() {
 	global $wpdb;
-	$table = $wpdb->prefix . 'cappers_corner_chat_replies';
-	// Get current number of likes
-	$likes = $wpdb->get_results("select likes from " . $table . " where id = " . $_POST['reply'] . " limit 1", OBJECT);
-	// Update with increased number of likes
-	$wpdb->update( $table, [
-		'likes' => intval($likes[0]->likes) + 1,
-	],
-		[
-			'id' => $_POST['reply'],
-		] );
-	echo intval($likes[0]->likes) + 1;
+	$table = $wpdb->prefix . 'cappers_corner_chat_votes';
+	$votes = $wpdb->get_results("select * from " . $table . " where user_id = " . get_current_user_id() . " and reply_id = " . $_POST['reply'] . " limit 1", OBJECT);
+	if (is_null($votes[0])) {
+        $vote = [
+            'vote' => 1,
+            'reply_id' => $_POST['reply'],
+            'user_id' => get_current_user_id(),
+        ];
+        $wpdb->insert($table, $vote);
+        echo 1;
+    }
+	if ($votes[0]->vote == -1) {
+        $wpdb->update($table, [
+            'vote' => 1,
+        ],
+            [
+                'reply_id' => $_POST['reply'],
+                'user_id' => get_current_user_id(),
+            ]);
+        echo 2;
+    }
+	if ($votes[0]->vote == 1) {
+        echo 0;
+    }
 	wp_die();
 }
 
@@ -95,18 +117,30 @@ function repliesLike() {
 
 add_action('wp_ajax_repliesDislike', 'repliesDislike');
 function repliesDislike() {
-	global $wpdb;
-	$table = $wpdb->prefix . 'cappers_corner_chat_replies';
-	// Get current number of likes
-	$likes = $wpdb->get_results("select likes from " . $table . " where id = " . $_POST['reply'] . " limit 1", OBJECT);
-	// Update with increased number of likes
-	$wpdb->update( $table, [
-		'likes' => intval($likes[0]->likes) - 1,
-	],
-		[
-			'id' => $_POST['reply'],
-		] );
-	echo intval($likes[0]->likes) - 1;
-	wp_die();
+    global $wpdb;
+    $table = $wpdb->prefix . 'cappers_corner_chat_votes';
+    $votes = $wpdb->get_results("select * from " . $table . " where user_id = " . get_current_user_id() . " and reply_id = " . $_POST['reply'] . " limit 1", OBJECT);
+    if (is_null($votes[0])) {
+        $vote = [
+            'vote' => -1,
+            'reply_id' => $_POST['reply'],
+            'user_id' => get_current_user_id(),
+        ];
+        $wpdb->insert($table, $vote);
+        echo -1;
+    }
+    if ($votes[0]->vote == 1) {
+        $wpdb->update($table, [
+            'vote' => -1,
+        ],
+            [
+                'reply_id' => $_POST['reply'],
+                'user_id' => get_current_user_id(),
+            ]);
+        echo -2;
+    }
+    if ($votes[0]->vote == -1) {
+        echo 0;
+    }
+    wp_die();
 }
-
