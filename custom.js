@@ -172,3 +172,24 @@ function dislike(reply) {
         jQuery('#' + reply + '-likes').text(parseInt(jQuery('#' + reply + '-likes').text()) + parseInt(response))
     })
 }
+
+// Send Image
+
+jQuery('#chat-image').change(function() {
+    console.log('changed');
+    let formData = new FormData();
+    formData.append('chat-image', jQuery('#chat-image')[0].files[0]);
+    formData.append('action', 'repliesUpload');
+    jQuery.ajax({
+        url: Obj.url,
+        type: 'post',
+        data: formData,
+        processData: false,
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    })
+})

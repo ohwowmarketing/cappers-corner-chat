@@ -11,8 +11,12 @@ $profile_id = um_profile_id();
     <div class="ui-comments">
         <form action="" class="ui-comments-msgboard uk-animation-toggle" tabindex="0" id="replyForm"">
             <?php if (is_user_logged_in() && array_intersect(['cappers', 'cappers_chat'], wp_get_current_user()->roles)) : ?>
-                <input type="hidden" name="ui-cm-field" class="ui-cm-field" placeholder="Write a comment" autocomplete="off" id="reply" required>
+                <input type="text" name="ui-cm-field" class="ui-cm-field" placeholder="Write a comment" autocomplete="off" id="reply" required>
                 <div class="ui-cm-widget-controls" >
+                    <div uk-form-custom style="margin-right: 23px;">
+                        <input name="chat-image" type="file" accept="image/*" id="chat-image">
+                        <button type="button" tabindex="-1" class="uk-icon-button" uk-icon="image"></button>
+                    </div>
                     <button type="submit" name="ui-msg-submit" class="ui-msg-submit"></button>
                 </div>
             <?php else : ?>
