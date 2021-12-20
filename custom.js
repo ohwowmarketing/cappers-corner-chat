@@ -72,19 +72,19 @@ function loadReplies() {
             } else {
                 jQuery('#replies').html('<div class="uk-position-center uk-text-center --welcome">It\'s empty in here. Try writing a comment. <small class="uk-display-block uk-text-meta">Comments are subject to site moderator\'s discretionary removal.</small></div>');
             }
-        }
-        // Scroll to Bottom After Chats and Images have Loaded
-        jQuery('img').each(function() {
-            if(this.complete) {
-                let element = document.getElementById('replies-body');
-                element.scrollTop = element.scrollHeight;
-            } else {
-                jQuery(this).one('load', function() {
+            // Scroll to Bottom After Chats and Images have Loaded
+            jQuery('img').each(function() {
+                if(this.complete) {
                     let element = document.getElementById('replies-body');
                     element.scrollTop = element.scrollHeight;
-                })
-            }
-        });
+                } else {
+                    jQuery(this).one('load', function() {
+                        let element = document.getElementById('replies-body');
+                        element.scrollTop = element.scrollHeight;
+                    })
+                }
+            });
+        }
     });
 }
 
@@ -92,6 +92,7 @@ function loadReplies() {
 
 jQuery('#replyForm').submit(function(event) {
     event.preventDefault();
+    UIkit.notification('Sent!');
     reply = jQuery('#reply').val();
     jQuery.post(Obj.url, {
         'reply': reply,
@@ -101,14 +102,7 @@ jQuery('#replyForm').submit(function(event) {
         // Reset input field and focus on it
         jQuery('#reply').val('');
         jQuery('#reply').focus();
-        jQuery('.emojionearea-editor').text('');
-        jQuery('#replies').append('' +
-            '<div class="ui-comment"><a class="avatar"><img class="uk-border-circle" width="42" height="42" src="/wp-content/plugins/ultimate-member/assets/img/default_avatar.jpg"></a><div class="content"><a class="author">You!</a><div class="metadata"><time class="date">' +
-            moment().format('MMM D, YYYY h:mm A') +
-            '</time></div><div class="message">' +
-            reply +
-            '</div></div></div>'
-        );
+        jQuery('.emojionearea-editor').text(''); // What is this?
         loadReplies();
     });
 });
