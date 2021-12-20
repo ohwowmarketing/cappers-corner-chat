@@ -144,3 +144,23 @@ function repliesDislike() {
     }
     wp_die();
 }
+
+// Replies Image
+
+add_action('wp_ajax_repliesImage', 'repliesImage');
+function repliesImage() {
+    // Save Image
+    $file = uniqid('chat-image-') . '-' . $_FILES['chat-image']['name'];
+    move_uploaded_file($_FILES['chat-image']['tmp_name'], wp_upload_dir()['path'] . '/' . $file);
+    // Save Reply with Image
+    global $wpdb;
+    $table = $wpdb->prefix . 'cappers_corner_chat_replies';
+    $reply = [
+        'reply' => '<img src="' . wp_upload_dir()['url'] . '/' . $file . '">',
+        'channel' => $_POST['channel'],
+        'enabled' => true,
+        'user_id' => get_current_user_id(),
+    ];
+    $wpdb->insert($table, $reply);
+    wp_die();
+}

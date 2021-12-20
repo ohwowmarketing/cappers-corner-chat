@@ -179,17 +179,16 @@ jQuery('#chat-image').change(function() {
     console.log('changed');
     let formData = new FormData();
     formData.append('chat-image', jQuery('#chat-image')[0].files[0]);
-    formData.append('action', 'repliesUpload');
+    formData.append('channel', selectedChannel);
+    formData.append('action', 'repliesImage');
     jQuery.ajax({
         url: Obj.url,
         type: 'post',
         data: formData,
+        contentType: false,
         processData: false,
         success: function (response) {
-            console.log(response);
-        },
-        error: function (error) {
-            console.log(error);
+            loadReplies();
         }
     })
 })

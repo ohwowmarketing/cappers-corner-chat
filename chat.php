@@ -14,7 +14,7 @@ $profile_id = um_profile_id();
                 <input type="text" name="ui-cm-field" class="ui-cm-field" placeholder="Write a comment" autocomplete="off" id="reply" required>
                 <div class="ui-cm-widget-controls" >
                     <div uk-form-custom style="margin-right: 23px;">
-                        <input name="chat-image" type="file" accept="image/*" id="chat-image">
+                        <input name="chat-image" type="file" accept="image/svg+xml,image/jpeg,image/png,image/png,image/gif" id="chat-image">
                         <button type="button" tabindex="-1" class="uk-icon-button" uk-icon="image"></button>
                     </div>
                     <button type="submit" name="ui-msg-submit" class="ui-msg-submit"></button>
