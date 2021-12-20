@@ -102,7 +102,6 @@ jQuery('#replyForm').submit(function(event) {
         jQuery('#reply').val('');
         jQuery('#reply').focus();
         jQuery('.emojionearea-editor').text('');
-        console.log(reply);
         jQuery('#replies').append('' +
             '<div class="ui-comment"><a class="avatar"><img class="uk-border-circle" width="42" height="42" src="/wp-content/plugins/ultimate-member/assets/img/default_avatar.jpg"></a><div class="content"><a class="author">You!</a><div class="metadata"><time class="date">' +
             moment().format('MMM D, YYYY h:mm A') +
@@ -176,7 +175,7 @@ function dislike(reply) {
 // Send Image
 
 jQuery('#chat-image').change(function() {
-    console.log('changed');
+    UIkit.notification('Uploading');
     let formData = new FormData();
     formData.append('chat-image', jQuery('#chat-image')[0].files[0]);
     formData.append('channel', selectedChannel);
@@ -188,7 +187,10 @@ jQuery('#chat-image').change(function() {
         contentType: false,
         processData: false,
         success: function (response) {
+            if (response.length > 0) {
+                UIkit.notification(response);
+            }
             loadReplies();
-        }
+        },
     })
 })

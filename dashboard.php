@@ -69,11 +69,16 @@
                 'id' => $_POST['id'],
             ]);
         }
+        // Delete a Reply Permanently
+        if ($_POST['action'] == 'deleteReply') {
+            $table = $wpdb->prefix . 'cappers_corner_chat_replies';
+            $wpdb->delete($table, ['id' => $_POST['id']], ['%d']);
+        }
     }
 
     // Get Data
     $channels = $wpdb->get_results("select * from " . $wpdb->prefix . "cappers_corner_chat_channels", OBJECT);
-    $replies = $wpdb->get_results("select * from " . $wpdb->prefix . "cappers_corner_chat_replies", OBJECT);
+    $replies = $wpdb->get_results("select * from " . $wpdb->prefix . "cappers_corner_chat_replies order by created_at desc", OBJECT);
 
 ?>
 
@@ -131,6 +136,7 @@
             <thead>
             <tr>
                 <th>Reply</th>
+                <th class="uk-table-expand"></th>
                 <th>Author</th>
                 <th>Date/Time</th>
             </tr>
@@ -138,21 +144,28 @@
             <tbody>
             <?php foreach($replies as $reply) : ?>
                 <tr>
-                    <td class="uk-flex uk-flex-middle">
+                    <td>
                         <?php echo $reply->reply; ?>
+                    </td>
+                    <td>
                         <?php if ($reply->enabled) : ?>
-                            <form action="" method="post" class="uk-inline uk-margin-left">
+                            <form action="" method="post" class="uk-inline">
                                 <input type="hidden" name="action" value="disableReply">
                                 <input type="hidden" name="id" value="<?php echo $reply->id; ?>">
                                 <input type="submit" value="Hide" class="uk-button uk-button-text">
                             </form>
                         <?php else: ?>
-                            <form action="" method="post" class="uk-inline uk-margin-left">
+                            <form action="" method="post" class="uk-inline">
                                 <input type="hidden" name="action" value="enableReply">
                                 <input type="hidden" name="id" value="<?php echo $reply->id; ?>">
                                 <input type="submit" value="Enable" class="uk-button uk-button-text">
                             </form>
                         <?php endif; ?>
+                        <form action="" method="post" class="uk-inline uk-margin-left">
+                            <input type="hidden" name="action" value="deleteReply">
+                            <input type="hidden" name="id" value="<?php echo $reply->id; ?>">
+                            <input type="submit" value="Delete" class="uk-button uk-button-text uk-text-danger">
+                        </form>
                    </td>
                     <td><a href="<?php echo get_edit_profile_url($reply->user_id); ?>"><?php echo get_userdata($reply->user_id)->display_name; ?></a></td>
                     <td><?php echo date('F j, Y g:i a', strtotime($reply->created_at)); ?></td>

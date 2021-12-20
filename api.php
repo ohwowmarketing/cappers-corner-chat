@@ -149,14 +149,25 @@ function repliesDislike() {
 
 add_action('wp_ajax_repliesImage', 'repliesImage');
 function repliesImage() {
+    $image = $_FILES['chat-image'];
+    // Checks
+    if (empty($image)) : wp_die('No file is selected.'); endif;
+    if($image['size'] > wp_max_upload_size()) : wp_die('That picture is too big.'); endif;
+    $mimeTypes = [
+        'image/png',
+        'image/jpeg',
+        'image/gif',
+        'image/svg+xml',
+    ];
+    if(!in_array(mime_content_type($image['tmp_name'] ), $mimeTypes)) : wp_die('That file type is not allowed.'); endif;
     // Save Image
-    $file = uniqid('chat-image-') . '-' . $_FILES['chat-image']['name'];
-    move_uploaded_file($_FILES['chat-image']['tmp_name'], wp_upload_dir()['path'] . '/' . $file);
+    $file = uniqid('chat-image-') . '-' . $image['name'];
+    move_uploaded_file($image['tmp_name'], wp_upload_dir()['path'] . '/' . $file);
     // Save Reply with Image
     global $wpdb;
     $table = $wpdb->prefix . 'cappers_corner_chat_replies';
     $reply = [
-        'reply' => '<img src="' . wp_upload_dir()['url'] . '/' . $file . '">',
+        'reply' => '<img src="' . wp_upload_dir()['url'] . '/' . $file . '" class="uk-width-2-3@m">',
         'channel' => $_POST['channel'],
         'enabled' => true,
         'user_id' => get_current_user_id(),
