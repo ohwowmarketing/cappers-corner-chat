@@ -1,4 +1,5 @@
 let selectedChannel = undefined;
+jQuery('#replies-empty').removeClass('uk-hidden');
 
 loadChannels();
 // Check for new replies repeatedly
@@ -13,27 +14,33 @@ function loadChannels() {
         'action': 'ChannelsIndex',
     }, function (response) {
         const channels = JSON.parse(response);
+        let css = '';
         channels.map((channel, key) => {
-            jQuery('#channel-nav').append('<li onclick="changeChannel(' + channel.id + ')" id="channel-link-' + channel.id + '"><a>' + channel.name + '</a></li>');
             if (eval(channel.main)) {
                 selectedChannel = channel.id;
-                jQuery('#channel-link-' + channel.id).addClass('uk-active');
+                css = 'uk-active';
+            } else {
+                css = '';
             }
+            jQuery('#heading').text(channel.name);
+            jQuery('#channels-list').append('<li class="' + css + '" id="channels-link-' + channel.id + '" onclick="changeChannel(' + channel.id + ',\'' + channel.name + '\')"><a>' + channel.name + '</a></li>');
         });
         loadReplies() // for the first time
     });
-    // Show the 'Select a channel' tooltip
-    var tooltip = UIkit.tooltip('#tooltip').show();
 }
 
 // Change active channel
 
-function changeChannel(id) {
-    jQuery('#channel-nav li').each(function(index, element) {
+function changeChannel(id, heading) {
+    selectedChannel = id;
+    // Update switcher
+    jQuery('#channels-list li').each(function() {
         jQuery(this).removeClass('uk-active');
     })
-    jQuery('#channel-link-' + id).addClass('uk-active');
-    selectedChannel = id;
+    jQuery('#channels-link-' + id).addClass('uk-active');
+    // Update heading
+    jQuery('#heading').text(heading);
+    // Reload replies
     loadReplies();
 }
 
@@ -47,6 +54,7 @@ function loadReplies() {
         const replies = JSON.parse(response);
         if (replies.length !== jQuery('#replies').children().length) {
             if (replies.length > 0) {
+                jQuery('#replies-empty').addClass('uk-hidden');
                 jQuery('#replies').html('');
                 replies.map((reply, key) => {
                     jQuery('#replies').append('' +
@@ -70,7 +78,8 @@ function loadReplies() {
                     );
                 });
             } else {
-                jQuery('#replies').html('<div class="uk-position-center uk-text-center --welcome">It\'s empty in here. Try writing a comment. <small class="uk-display-block uk-text-meta">Comments are subject to site moderator\'s discretionary removal.</small></div>');
+                jQuery('#replies').html('');
+                jQuery('#replies-empty').removeClass('uk-hidden');
             }
             // Scroll to Bottom After Chats and Images have Loaded
             jQuery('img').each(function() {

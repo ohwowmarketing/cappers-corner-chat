@@ -7,6 +7,8 @@ include 'emojis.php';
 $profile_id = um_profile_id();
 
 ?>
+
+<ul class="uk-subnav uk-subnav-pill" id="channels-list"></ul>
 <div class="--cappers-chat-plugin">
     <div class="ui-comments">
         <form action="" class="ui-comments-msgboard uk-animation-toggle" tabindex="0" id="replyForm"">
@@ -14,7 +16,7 @@ $profile_id = um_profile_id();
                 <input type="text" name="ui-cm-field" class="ui-cm-field" placeholder="Write a comment" autocomplete="off" id="reply" required>
                 <div class="ui-cm-widget-controls" >
                     <div uk-form-custom style="margin-right: 23px;">
-                        <input name="chat-image" type="file" accept="image/svg+xml,image/jpeg,image/png,image/png,image/gif" id="chat-image">
+                        <input name="chat-image" type="file" accept="image/jpeg,image/png,image/png,image/gif" id="chat-image">
                         <button type="button" tabindex="-1" class="uk-icon-button" uk-icon="image"></button>
                     </div>
                     <button type="submit" name="ui-msg-submit" class="ui-msg-submit"></button>
@@ -25,8 +27,7 @@ $profile_id = um_profile_id();
         </form>
         <nav class="uk-navbar-container ui-comments-header uk-light" uk-navbar>
             <div class="uk-navbar-left">
-                <div uk-tooltip="title: Select a channel" id="tooltip"><h1 class="ui-ch-channel" style="min-width: inherit;">&nbsp;</h1></div>
-                <ul class="uk-navbar-nav" id="channel-nav"></ul>
+                <h1 class="ui-ch-channel" style="min-width: inherit;" id="heading"></h1>
             </div>
             <div class="uk-navbar-right">
                 <div class="ui-ch-action">
@@ -50,6 +51,7 @@ $profile_id = um_profile_id();
         </nav>
         <div class="ui-comments-body" id="replies-body">
             <div id="replies"></div>
+            <div class="uk-position-center uk-text-center --welcome uk-hidden" id="replies-empty">It's empty in here. Try writing a comment. <small class="uk-display-block uk-text-meta">Comments are subject to site moderator's discretionary removal.</small></div>
         </div>
 
         <div id="form-panel" class="uk-position-cover uk-overlay uk-overlay-default uk-flex uk-flex-middle" uk-overflow-auto hidden>
@@ -82,5 +84,3 @@ $profile_id = um_profile_id();
 
     </div>
 </div>
-
-<div id="root"></div>

@@ -157,7 +157,6 @@ function repliesImage() {
         'image/png',
         'image/jpeg',
         'image/gif',
-        'image/svg+xml',
     ];
     if(!in_array(mime_content_type($image['tmp_name'] ), $mimeTypes)) : wp_die('That file type is not allowed.'); endif;
     // Save Image
@@ -167,7 +166,7 @@ function repliesImage() {
     global $wpdb;
     $table = $wpdb->prefix . 'cappers_corner_chat_replies';
     $reply = [
-        'reply' => '<img src="' . wp_upload_dir()['url'] . '/' . $file . '" class="uk-width-2-3@m">',
+        'reply' => '<img src="' . wp_upload_dir()['url'] . '/' . $file . '" class="uk-width-1-2@m">',
         'channel' => $_POST['channel'],
         'enabled' => true,
         'user_id' => get_current_user_id(),
