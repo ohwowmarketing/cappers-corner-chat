@@ -1,31 +1,27 @@
-jQuery(function($emojioneArea) {
-    jQuery("#reply").emojioneArea({
-        shortnames: true,
-        // standalone: true,
-    });
-});
+// jQuery(function($emojioneArea) {
+//     jQuery("#reply").emojioneArea({
+//         shortnames: true,
+//         // standalone: true,
+//     });
+// });
 
 // Hack the ContentEditable Div
 (function($) {
 
-    jQuery(window).on('load',function() {
-        jQuery('.emojionearea-editor').attr('id','emojionearea-editor');
+    // jQuery(window).on('load',function() {
+    //     jQuery('.emojionearea-editor').attr('id','emojionearea-editor');
+    //     jQuery('#reply').show();
+    //     // jQuery('#emojionearea-editor').();
 
-        jQuery('.emojionearea-editor').on('keyup', function(e){
-            if (e.keyCode== 13 || e.which== 13) { // if enter key is pressed
-                if ( jQuery(this).html() == '' ) {
-                    jQuery(this).parent().closest('form').addClass('error-submission uk-animation-shake'); // add red border & shake animation
-                    jQuery(this).attr('placeholder', 'Oops! Please type again'); // remind the user
-                } else {
-                    var contentEditableValue=jQuery('#emojionearea-editor').html(); //get the div value
-                    jQuery('#reply').attr('value', contentEditableValue); //add a dummy input to the form to send the value
-                    jQuery('.ui-msg-submit').submit(); //submit the form
-                    jQuery(this).parent().closest('form').removeClass('error-submission uk-animation-shake'); // remove the red border & shake animation
-                    jQuery(this).attr('placeholder', 'Write a comment'); // restore placeholder
-                }
-            }
-        });
-    });
+    //     jQuery('.emojionearea-editor').on('keyup', function(e){
+    //         if (e.keyCode== 13 || e.which== 13) { // if enter key is pressed
+    //             var contentEditableValue = jQuery('#emojionearea-editor').html();
+    //             jQuery('#reply').attr('value', contentEditableValue);
+    //             jQuery('.ui-msg-submit').submit();
+    //             console.log(contentEditableValue);
+    //         }
+    //     });
+    // });
 
     // Add drag & drop
     // jQuery(window).on('load', function() {
