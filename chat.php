@@ -22,7 +22,7 @@ $profile_id = um_profile_id();
                     <button type="submit" name="ui-msg-submit" class="ui-msg-submit"></button>
                 </div>
             <?php else : ?>
-                <a href="#form-panel" class="ui-cm-field" uk-toggle="animation: uk-animation-fade">Click here to Login or join now to post a reply</a>
+                <a href="<?php echo esc_url( site_url( '/cappers-login' ) ); ?>" class="ui-cm-field" uk-toggle="animation: uk-animation-fade">Click here to Login or join now to post a reply</a>
             <?php endif; ?>
         </form>
         <nav class="uk-navbar-container ui-comments-header uk-light" uk-navbar>
@@ -31,21 +31,22 @@ $profile_id = um_profile_id();
             </div>
             <div class="uk-navbar-right">
                 <div class="ui-ch-action">
+                    <?php if (is_user_logged_in() && array_intersect(['cappers', 'cappers_chat'], wp_get_current_user()->roles)) : ?>
                     <div class="ui-ch-moreaction">
-                        <div class="ui-ch-moreaction-nav">
-                            <a class="uk-margin-remove"><img src="<?php echo get_avatar_url(wp_get_current_user()->ID); ?>" class="uk-border-circle" style="height: 20px; width: 20px;"></a>
-                            <div uk-dropdown="offset: 12; pos: bottom-right">
-                                <ul class="uk-nav uk-dropdown-nav">
-                                    <?php if (is_user_logged_in() && array_intersect(['cappers', 'cappers_chat'], wp_get_current_user()->roles)) : ?>
-                                        <li><a href="<?php echo esc_url( site_url('cappers-profile/'.$profile_id) ); ?>">Profile</a></li>
-                                        <li><a href="<?php echo esc_url( site_url('logout') ); ?>">Logout</a></li>
-                                    <?php else : ?>
-                                        <li><a id="form-btn" href="#form-panel" uk-toggle="animation: uk-animation-fade">Login</a></li>
-                                    <?php endif; ?>
-                                </ul>
-                            </div>
+                        <a class="um-avatar uk-margin-remove"><img src="<?php echo get_avatar_url(wp_get_current_user()->ID); ?>" class="uk-border-circle" style="height: 2.344rem; width: 2.344rem;"></a>
+                        <div uk-dropdown="pos: bottom-right">
+                            <ul class="uk-nav uk-dropdown-nav">
+                                <li><a href="<?php echo esc_url( site_url('cappers-profile/'.$profile_id) ); ?>">Profile</a></li>
+                                <li><a href="<?php echo esc_url( site_url('logout') ); ?>">Logout</a></li>
+                            </ul>
                         </div>
                     </div>
+                    <?php else : ?>
+                    <div class="ui-ch-moreaction">
+                        <a href="<?php echo esc_url( site_url( '/cappers-login' ) ); ?>">Login</a>
+                        <a href="<?php echo esc_url( site_url( '/cappers-register' ) ); ?>">Register</a>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </nav>
@@ -54,31 +55,69 @@ $profile_id = um_profile_id();
             <div class="uk-position-center uk-text-center --welcome uk-hidden" id="replies-empty">It's empty in here. Try writing a comment. <small class="uk-display-block uk-text-meta">Comments are subject to site moderator's discretionary removal.</small></div>
         </div>
 
-        <div id="form-panel" class="uk-position-cover uk-overlay uk-overlay-default uk-flex uk-flex-middle" uk-overflow-auto hidden>
-            <a href="#form-panel" class="uk-position-small uk-position-top-rigt --close-overlay" uk-toggle="animation: uk-animation-fade">&times;</a>
+        <?php if ( is_page([ 2053, 2168, 2166 ]) ) {
+            $hideMe = 'hidden';
+        } else {
+            $hideMe = '';
+        } ?>
 
-            <div class="uk-card uk-card-default uk-card-body uk-box-shadow-large">
-                <ul class="uk-tab uk-flex-center" uk-grid uk-switcher="animation: uk-animation-fade">
-                    <li><a href="#">Log In</a></li>
-                    <li><a href="#">Sign Up</a></li>
-                    <li class="uk-hidden"><a href="#">Forgot Password?</a></li>
-                </ul>
+        <div id="form-panel" class="uk-position-cover uk-overlay uk-overlay-default uk-flex uk-flex-middle" uk-overflow-auto <?=$hideMe?>>
+            
+            <?php 
+            // Cappers Login
+            if ( is_page( 2172 ) ) : ?>
 
-                <ul class="uk-switcher uk-margin">
-                    <li>
-                        <h3 class="uk-card-title uk-text-center">Welcome!</h3>
-                        <?php echo do_shortcode('[ultimatemember form_id="2159"]'); ?>
-                    </li>
-                    <li>
-                        <h3 class="uk-card-title uk-text-center">Sign up today. It's free!</h3>
-                        <?php echo do_shortcode('[ultimatemember form_id="2158"]'); ?>
-                    </li>
-                    <li>
-                        <h3 class="uk-card-title uk-text-center">Forgot your password?</h3>
-                        <?php echo do_shortcode('[ultimatemember_password]'); ?>
-                    </li>
-                </ul>
-            </div>
+                <div class="uk-card uk-card-default uk-card-body uk-box-shadow-large">
+                    <ul class="uk-tab uk-flex-center">
+                        <li><a href="<?php echo esc_url( site_url( '/cappers-login' ) ); ?>">Log In</a></li>
+                        <li><a href="<?php echo esc_url( site_url( '/cappers-register' ) ); ?>">Sign Up</a></li>
+                    </ul>
+
+                    <ul class="um-tab-form uk-margin">
+                        <li>
+                            <h3 class="uk-card-title uk-text-center">Welcome!</h3>
+                            <?php echo do_shortcode('[ultimatemember form_id="2159"]'); ?>
+                        </li>
+                    </ul>
+                </div>
+
+            <?php 
+            // Cappers Register
+            elseif ( is_page( 2174 ) ) : ?>
+
+                <div class="uk-card uk-card-default uk-card-body uk-box-shadow-large">
+                    <ul class="uk-tab uk-flex-center">
+                        <li><a href="<?php echo esc_url( site_url( '/cappers-login' ) ); ?>">Log In</a></li>
+                        <li class="uk-active"><a href="<?php echo esc_url( site_url( '/cappers-register' ) ); ?>">Sign Up</a></li>
+                    </ul>
+
+                    <ul class="um-tab-form uk-margin">
+                        <li>
+                            <h3 class="uk-card-title uk-text-center">Sign up today. It's free!</h3>
+                            <?php echo do_shortcode('[ultimatemember form_id="2158"]'); ?>
+                        </li>
+                    </ul>
+                </div>
+
+            <?php 
+            // Cappers Password Reset
+            elseif ( is_page( 2182 ) ) : ?>
+
+                <div class="uk-card uk-card-default uk-card-body uk-box-shadow-large">
+                    <ul class="uk-tab uk-flex-center">
+                        <li><a href="<?php echo esc_url( site_url( '/cappers-login' ) ); ?>">Log In</a></li>
+                        <li><a href="<?php echo esc_url( site_url( '/cappers-register' ) ); ?>">Sign Up</a></li>
+                    </ul>
+
+                    <ul class="um-tab-form uk-margin">
+                        <li>
+                            <h3 class="uk-card-title uk-text-center">Forgot your password?</h3>
+                            <?php echo do_shortcode('[ultimatemember_password]'); ?>
+                        </li>
+                    </ul>
+                </div>
+
+            <?php endif; ?>
 
         </div>
 
