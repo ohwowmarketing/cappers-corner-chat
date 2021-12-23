@@ -101,6 +101,7 @@ function loadReplies() {
 jQuery(function($emojioneArea) {
     jQuery("#reply").emojioneArea({
         shortnames: true,
+        buttonTitle: "Use the TAB key to insert emoji faster"
         // standalone: true,
     });
 });
@@ -116,6 +117,7 @@ jQuery(window).on('load',function() {
                 jQuery(this).parent().closest('form').addClass('error-submission uk-animation-shake'); // add red border & shake animation
                 jQuery(this).attr('placeholder', 'Oops! Please type again'); // remind the user
             } else {
+                e.preventDefault();
                 var contentEditableValue = jQuery('#emojionearea-editor').html(); //get the div value
                 jQuery('#reply').attr('value', contentEditableValue); //add a dummy input to the form to send the value
                 jQuery('#replyForm').submit(); //submit the form
@@ -128,7 +130,6 @@ jQuery(window).on('load',function() {
 
 jQuery('#replyForm').submit(function(event) {
     event.preventDefault();
-    UIkit.notification('Message Sent!', {pos: "top-right"});
     // reply = jQuery('#reply').val();
     reply = jQuery('#emojionearea-editor').html();
     jQuery.post(Obj.url, {
@@ -137,10 +138,11 @@ jQuery('#replyForm').submit(function(event) {
         'action': 'repliesStore',
     }, function (response) {
         // Reset input field and focus on it
+        jQuery('.emojionearea-editor').text(''); // clear text clone div element from emojionearea
         jQuery('#reply').val('');
         jQuery('#reply').focus();
-        jQuery('.emojionearea-editor').text(''); // What is this?
         loadReplies();
+        UIkit.notification('Message Sent!', {pos: "top-right"});
     });
 });
 

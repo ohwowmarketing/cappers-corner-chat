@@ -24,6 +24,7 @@ $profile_id = um_profile_id();
             <?php else : ?>
                 <a href="<?php echo esc_url( site_url( '/cappers-login' ) ); ?>" class="ui-cm-field" uk-toggle="animation: uk-animation-fade">Click here to Login or join now to post a reply</a>
             <?php endif; ?>
+            <div class="uk-position-absolute --help-text">Note: Comments are subject to site moderator's discretionary removal.</div>
         </form>
         <nav class="uk-navbar-container ui-comments-header uk-light" uk-navbar>
             <div class="uk-navbar-left">
@@ -55,7 +56,7 @@ $profile_id = um_profile_id();
             <div class="uk-position-center uk-text-center --welcome uk-hidden" id="replies-empty">It's empty in here. Try writing a comment. <small class="uk-display-block uk-text-meta">Comments are subject to site moderator's discretionary removal.</small></div>
         </div>
 
-        <?php if ( is_page([ 2053, 2168, 2166 ]) ) {
+        <?php if ( is_page([ 2053, 2168, 2166 ]) || is_singular( 'cappers_corner' ) ) {
             $hideMe = 'hidden';
         } else {
             $hideMe = '';
